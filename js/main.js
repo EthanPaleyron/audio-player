@@ -13,10 +13,10 @@ let isLoop = false;
 // Mes audios
 const audios = [
   {
-    src: "RESET.mp3",
-    title: "RESET",
-    author: "ELEPS",
-    image: "RESET.jpg",
+    src: "back-one-day.mp3",
+    title: "Back One Day",
+    author: "TheFatRat & NEFFEX",
+    image: "back-one-day.jpg",
   },
   {
     src: "pegboard-nerds-self-destruct.mp3",
@@ -25,10 +25,10 @@ const audios = [
     image: "pegboard-nerds-self-destruct.jpg",
   },
   {
-    src: "back-one-day.mp3",
-    title: "Back One Day",
-    author: "TheFatRat & NEFFEX",
-    image: "back-one-day.jpg",
+    src: "RESET.mp3",
+    title: "RESET",
+    author: "ELEPS",
+    image: "RESET.jpg",
   },
 ];
 
@@ -91,12 +91,14 @@ document.querySelector("#past").addEventListener("click", () => {
 document.querySelector("#playPause").addEventListener("click", () => {
   if (isPause) {
     audio.play();
-    isPause = false;
     logoPlayPause.className = "fa-solid fa-pause";
+    document.querySelector("#playPause").title = "Pause";
+    isPause = false;
   } else {
     audio.pause();
-    isPause = true;
     logoPlayPause.className = "fa-solid fa-play";
+    document.querySelector("#playPause").title = "Play";
+    isPause = true;
   }
 });
 
@@ -138,23 +140,27 @@ function volumeAudio() {
   if (isMuted === false) {
     audio.muted = true;
     iconVolume.className = "fa-solid fa-volume-xmark";
+    volume.title = "Unmuted";
     isMuted = true;
   } else {
     audio.muted = false;
     iconVolume.className = "fa-solid fa-volume-high";
+    volume.title = "Muted";
     isMuted = false;
   }
 }
 
 // Activer ou désactiver le mode muet de l'audio
 volume.addEventListener("click", () => volumeAudio());
-volumeRange.addEventListener("change", () => {
+volumeRange.addEventListener("input", () => {
   audio.volume = volumeRange.value / 100;
   if (volumeRange.value / 0) {
     iconVolume.className = "fa-solid fa-volume-high";
+    volume.title = "Muted";
     isMuted = false;
   } else if (volumeRange.value >= 0) {
     iconVolume.className = "fa-solid fa-volume-xmark";
+    volume.title = "Unmuted";
     isMuted = true;
   }
 });
@@ -164,11 +170,13 @@ const iconLoop = document.querySelector("#loop > i");
 document.querySelector("#loop").addEventListener("click", () => {
   if (isLoop === false) {
     audio.loop = true;
-    isLoop = true;
     iconLoop.style.color = "#0075ff";
+    document.querySelector("#loop").title = "Looped";
+    isLoop = true;
   } else {
     audio.loop = false;
-    isLoop = false;
     iconLoop.style.color = "#000";
+    document.querySelector("#loop").title = "Unlooped";
+    isLoop = false;
   }
 });
